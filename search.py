@@ -42,13 +42,12 @@ results = soup.find_all("div", class_="ui-search-result__wrapper")
 items = []
 
 for div in results:
-    h2_tags = div.find("h2")
-    money_text_array = div.find("span", class_="andes-money-amount").get_text()
-    money = convert_money_text_to_number(money_text_array)
-    for h2_tag in h2_tags:
-        title = h2_tag.get_text().strip()
-        print(title, money)
-        items.append([title, money])
+    title_tags = div.find("h2")
+    money_text = div.find("span", class_="andes-money-amount").get_text()
+    money_number = convert_money_text_to_number(money_text)
+    for title_tag in title_tags:
+        title = title_tag.get_text().strip()
+        items.append([title, money_number])
 
 # Generate a Data Frame, sort and save result to file system
 df = pd.DataFrame(items, columns=["name", "price"])
